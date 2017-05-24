@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'storymakericons';
+  src:  url('../fonts/storymakericons.eot?ickdg8');
+  src:  url('../fonts/storymakericons.eot?ickdg8#iefix') format('embedded-opentype'),
+    url('../fonts/storymakericons.ttf?ickdg8') format('truetype'),
+    url('../fonts/storymakericons.woff?ickdg8') format('woff'),
+    url('../fonts/storymakericons.svg?ickdg8#storymakericons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon{
+  font-family: 'storymakericons';
+}
+
+@font-face {
+  font-family: 'titlefont';
+  src:  url('../fonts/titleFont.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
+
+
