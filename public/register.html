@@ -9,6 +9,10 @@
     <meta name="description" content="Create and rewrite your friends stories in this colaborative network for writers and drawers">
     <meta name="keywords" content="Story, Create, Social, Make, Write">
     <link rel="stylesheet" href="static/css/main.css" type="text/css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="angular.js"></script>
 </head>
 
 <body>
@@ -20,34 +24,34 @@
             </div>
             <div class="content-box">
                 <div class="register-form">
-                    <form id="registerData">
+                    <form id="upload-form" action="/user/registro" method="post">
                         <div class="form-content">
                             <!-- Form Inputs -->
                             <div class="form-inputs">
-                                <div class="input-box">
-                                    <p>User</p>
-                                    <input type="text" name="user" id="nick">
-                                </div>
-                                <div class="input-box">
-                                    <p><span class="icon">i</span> Name</p>
-                                    <input type="text" id="userName">
-                                </div>
-                                <div class="input-box">
-                                    <p>Password</p>
-                                    <input type="password" name="password" id="password">
-                                </div>
-                                <div class="input-box">
-                                    <p><span class="icon">m</span> Mail</p>
-                                    <input type="text" id="mail">
-                                </div>
+                                    <div class="input-box">
+                                        <p>User</p>
+                                        <input type="text" name="nick" id="nick" required>
+                                    </div>
+                                    <div class="input-box">
+                                        <p><span class="icon">i</span> Name</p>
+                                        <input type="text" name="name" id="userName" required>
+                                    </div>
+                                    <div class="input-box">
+                                        <p>Password</p>
+                                        <input type="password" name="pass" id="password">
+                                    </div>
+                                    <div class="input-box">
+                                        <p><span class="icon">m</span> Mail</p>
+                                        <input type="text" id="mail" name="mail">
+                                    </div>
                             </div>
                             <div class="input-picture">
                                 <img src="static/images/icon-happy.png">
-                                <input type="file" name="file" id="file" class="inputfile">
-                                <label for="file"><span class="icon">u</span>Imagen de
+                                <input type="file" name="photo" id="photo" class="inputfile" accept="image/*">
+                                <label for="photo"><span class="icon">u</span>Imagen de
                                     <br> Perfil</label>
                             </div>
-                            <a href="javascript:;" id="register-button" class="button">Create My Account</a>
+                            <input type="submit" class="button" value="Create My Account">
                         </div>
                         <!-- Form Button -->
                     </form>
@@ -61,40 +65,17 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
     </script>
-    <script>
-    //SCRIPT PARA LA COMUNICACION CON EL SERVIDOR
 
-    $(document).ready(function() {
-
-        /*
-
-        +++++++++++++++ ENVIAR REGISTRO +++++++++++++++++++++++++++++++
-            Este envia la imagen y los Datos al servidor para crear el Usuario 
-            Reemplazar la direccion que esta en el $.post("estaaaaaaaa!!!") por la que reciba los datos
-            en el servidor, las variables son postPic y postContent
-        */
-
-        $("#register-button").click(function() {
-            console.log('Sending Register Data');
-            nick = $("#nick").val();
-            userName = $("#userName").val();
-            password = $("#password").val();
-            mail = $("#mail").val();
-            file = $("#file").val();
-            $.post("https://noseque", {
-                nick: nick,
-                userName: userName,
-                password: password,
-                mail: mail,
-                file: file
-            });
-
-            console.log('Post Content: ' + nick);
-        });
-
-        //End Document.ready()
-    });
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous">
     </script>
+
+    <script>
+        window.jQuery || document.write('<script src="../node_modules/jquery/jquery.min.js"><\/script>');
+    </script>
+
+    <script src="sube-fotos.js"></script>
 </body>
 
 </html>

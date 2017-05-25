@@ -9,10 +9,14 @@
     <meta name="description" content="Create and rewrite your friends stories in this colaborative network for writers and drawers">
     <meta name="keywords" content="Story, Create, Social, Make, Write">
     <link rel="stylesheet" href="static/css/main.css" type="text/css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="angular.js"></script>
 </head>
 
 <body>
-    <div class="main-container">
+    <div class="main-container" ng-app="myApp" ng-controller="loginCtrl">
         <div class="login">
             <div class="header">
                 <h1>STORYmaker</h1></div>
@@ -43,8 +47,10 @@
             </div>
         </div>
     </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
     </script>
+
     <script>
     //SCRIPT PARA LA COMUNICACION CON EL SERVIDOR
 

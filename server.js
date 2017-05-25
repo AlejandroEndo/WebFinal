@@ -8,7 +8,7 @@ var morgan = require('morgan');
 var multer = require('multer');
 
 var db = require('./database');
-
+var user = require('./routes/user-router');
 var usuario;
 
 var app = express();
@@ -27,7 +27,9 @@ app.use(bodyparser.urlencoded({extended:true}));
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(multer({dest : './uploads/'}).single('photo'));
+app.use(multer({dest : './uploads'}).single('photo'));
+
+app.use('/user', user);
 
 db.poolConection(function (err) {
     if(err){
