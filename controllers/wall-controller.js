@@ -14,9 +14,9 @@ exports.getHistorias = function (data, callback) {
     });
 };
 
-exports.getAllHistorias = function (data,callback) {
+exports.getAllHistorias = function (callback) {
 
-    db.getConection().query('SELECT * FROM proyectos WHERE nick = ?', data, function (err, rows) {
+    db.getConection().query('SELECT * FROM historia',function (err, rows) {
         if(err){
             console.log(err);
             return callback(err);

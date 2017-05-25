@@ -29,8 +29,7 @@ router.get('/misHistorias', function (req, res) {
 });
 
 router.get('/historias', function (req, res) {
-    var data = root.getUsuario().nick;
-    control.getAllHistorias(data, function (err,rows) {
+    control.getAllHistorias(function (err,rows) {
         if(!err)
             res.json(rows);
         else {
