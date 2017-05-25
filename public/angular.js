@@ -9,7 +9,6 @@ var userdata;
 app.controller('loginCtrl', function ($window, $scope, $http) {
 
     $scope.login = function () {
-
         var data = {
             nick: $scope.nick,
             pass: $scope.pass
@@ -24,14 +23,48 @@ app.controller('loginCtrl', function ($window, $scope, $http) {
     };
 });
 
-app.controller('registroCtrl', function ($window, $scope, $http) {
+app.controller('wallCtrl', function ($window, $scope, $http) {
+    var miHistoria;
+    $http.get('/user/getUser').then(function (res) {
+        userdata = res.data;
+        console.log(res);
+        $scope.nick = userdata.nick;
+        $scope.imagen = userdata.profimg;
 
-    $scope.registrar = function () {
-        var data = {
-            nick: $scope.nick,
-            name: $scope.name,
-            mail: $scope.mail,
-            pass: $scope.pass
+        $http.get('wall/misHistorias').then(function (res) {
+            $scope.misHistorias = res.data;
+            console.log($scope.nick);
+        });
+
+        $http.get('wall/historias').then(function (res) {
+            $scope.historias = res.data;
+            console.log($scope.nick);
+        });
+
+        $scope.seleccionarHistoria = function (laHistoria) {
+            miHistoria = {
+                id_post: laHistoria
+            };
+            console.log(miHistoria);
+            $http.post('wall/comentarios', miHistoria).then(function (res) {
+                $scope.comentarios = res.data;
+            });
         };
-    }
+        $http.get('/user/getAll').then(function (res) {
+            console.log(res);
+            $scope.usuarios = res.data;
+        });
+    });
+
+    $scope.compartir = function () {
+        var usuario = {
+            nick: $scope.usuarioSeleccionado.singleSelect
+        };
+
+        console.log(usuario);
+        
+        $http.post('/user/compartir', JSON.stringify(usuario)).then(function (res) {
+            $window.location.href = 'wall.html';
+        });
+    };
 });

@@ -9,9 +9,20 @@ var multer = require('multer');
 
 var db = require('./database');
 var user = require('./routes/user-router');
+var wall = require('./routes/wall-router');
+
 var usuario;
+var historia;
 
 var app = express();
+
+exports.setHistoria = function (nuevo) {
+    historia = nuevo;
+};
+
+exports.getHistoria = function () {
+    return historia;
+};
 
 exports.setUsuario = function (nuevo) {
     usuario = nuevo;
@@ -30,6 +41,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(multer({dest : './uploads'}).single('photo'));
 
 app.use('/user', user);
+app.use('/wall', wall);
 
 db.poolConection(function (err) {
     if(err){

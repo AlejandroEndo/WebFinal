@@ -15,7 +15,7 @@
     <script src="angular.js"></script>
 </head>
 
-<body>
+<body ng-app="myApp" ng-controller="wallCtrl">
     <div class="main-container">
         <!-- All the Wall Content -->
         <div class="wall">
@@ -23,15 +23,12 @@
             <div class="header">
                 <div class="header-content">
                     <div class="user">
-                        <div class="user-image"><img src="static/images/user-face.png"></div>
-                        <h2>UserName</h2>
+                        <div class="user-image"><img src="{{imagen}}"></div>
+                        <h2>{{nick}}</h2>
                     </div>
                     <div class="nav icon">
-                        <a href="javascript:;">f</a>
-                        <a href="javascript:;">s</a>
                         <a href="javascript:;" id="add-button">n</a>
-                        <a href="javascript:;">a</a>
-                        <a href="javascript:;" id="add-cat">c</a>
+                        <a href="javascript:;" id="add-cat">f</a>
                     </div>
                 </div>
             </div>
@@ -45,24 +42,25 @@
                     </div>
                     <div class="story-list">
                         <!-- REPEAT LIST - Se repite cada "story para cargar la lista" -->
-                        <div class="story">
+                        <div class="story" ng-repeat="i in misHistorias">
                             <span class="icon">f</span>
-                            <p>Story 1</p>
+                            <a ng-click="seleccionarHistoria(i.id_post)"><p>{{i.titulo}}</p></a>
                         </div>
+
                         <!-- End Story Repeat -->
                     </div>
                 </div>
                 <!-- Start The CO-Story List -->
                 <div class="co-stories">
                     <div class="title">
-                        <h2>Co-Stories</h2>
+                        <h2>All-Stories</h2>
                         <span class="icon">f</span>
                     </div>
                     <div class="story-list">
                         <!-- REPEAT LIST - Se repite cada "story para cargar la lista" -->
-                        <div class="story">
+                        <div class="story" ng-repeat="i in historias">
                             <span class="icon">f</span>
-                            <p>Story 1</p>
+                            <a ng-click="seleccionarHistoria(i.id_post)"><p>{{i.titulo}}</p></a>
                         </div>
                     </div>
                 </div>
@@ -72,23 +70,23 @@
                 <!-- Inner Wall Container -->
                 <div class="inner-wall">
                     <!-- Repeat for Each Feed -->
-                    <div class="feed">
+                    <div class="feed" ng-repeat="i in comentarios">
                         <!-- Image Box containing the storyboard image and some menu options -->
                         <div class="image-box">
                             <div class="nav">
                                 <a href="javascript:;" class="icon">l</a>
                                 <a href="javascript:;" class="icon">d</a>
                             </div>
-                            <div class="main-image"><img src="static/images/dummie.png"></div>
+                            <div class="main-image"><img src="{{i.image}}"></div>
                         </div>
                         <!-- Information of the owner Showing Pic - Name - and the description -->
                         <div class="info">
                             <div class="owner">
-                                <img src="static/images/user-face.png">
-                                <h2>Owner Name</h2>
+                                <img src="{{i.profimg}}" width="90px" height="90px">
+                                <h2>{{i.nick}}</h2>
                             </div>
                             <div class="description">
-                                <p>Lorem Ipsum y esas cosas aburridoras bla bla bla
+                                <p>{{i.contenido}}</p>
                                     <p>
                             </div>
                         </div>
@@ -98,30 +96,36 @@
         </div>
     </div>
     <!-- MODALES -->
-    <!-- Agregar post a una historia -->
+    <!-- Agregar comentario a una historia -->
     <div class="popup animable" id="new-segment">
-        <h2>Create New Post</h2>
-        <input type="file" id="postPic" name="photo" placeholder="picture" class="inputfile">
-        <label for="postPic"><span class="icon">u</span>Post Image</label>
-        <textarea id="postContent"></textarea>
-        <a href="javascript:;" class="button" id="segment-button">Make Post</a>
+        <form id="upload-comentario">
+            <h2>Create New Post</h2>
+            <input type="file" id="postPic" name="photo" placeholder="picture" class="inputfile">
+            <label for="postPic"><span class="icon">u</span>Post Image</label>
+            <textarea id="postContent" name="contenido"></textarea>
+            <input type="submit" value="Make Contribution" class="button">
+        </form>
     </div>
 
-        <div class="popup animable" id="new-story">
-        <h2>Create New Story</h2>
-        <input type="file" id="postPicNew" name="photo" placeholder="picture" class="inputfile">
-        <label for="postPicNew"><span class="icon">u</span>Story Image</label>
-        <input type="text" id="postCatNew" placeholder="Category">
-        <textarea id="postContentNew"></textarea>
-        <a href="javascript:;" class="button" id="story-button">Publish Story</a>
+    <div class="popup animable" id="new-story">
+        <form id="upload-historia">
+            <h2>Create New Story</h2>
+            <input type="file" id="postPicNew" name="photo" placeholder="picture" class="inputfile">
+            <label for="postPicNew"><span class="icon">u</span>Story Image</label>
+            <br>
+            <input type="text" name="titulo">
+            <textarea id="postContentNew" name="contenido"></textarea>
+            <input type="submit" value="Publish Story">
+        </form>
     </div>
 
-        <div class="popup animable" id="new-category">
-        <h2>Create New Category</h2>
-        <input type="file" id="postPicCat" name="photo" placeholder="picture" class="inputfile">
-        <label for="postPicCat"><span class="icon">u</span>Category Image</label>
-        <input type="text" id="newCat" placeholder="Category">
-        <a href="javascript:;" class="button" id="cat-button">Create Category</a>
+    <div class="popup animable" id="new-category">
+        <h2>Share project with:</h2>
+        <select class="button" ng-model="usuarioSeleccionado.singleSelect">
+            <option ng-repeat="a in usuarios">{{a.nick}}</option>
+        </select>
+        <input ng-click="compartir()" value="Share" class="button">
+
     </div>
 
     <!-- Agregar historia nueva -->
@@ -135,7 +139,6 @@
     $(document).ready(function() {
 
         /*
-
         +++++++++++++++ NUEVO POST en la HISTORIA +++++++++++++++++++++++++++++++
             Este envia la imagen y los comentarios al servidor para crear el feed (la imagen central
             de cada feed) y el texto que esta abajo de la informacion de autor.
@@ -181,18 +184,30 @@
 
                 $("#cat-button").click(function() {
             console.log('Sending Register Data');
-            postPicCat = $("#postPicCat").val();
             newCat = $("#newCat").val();
            //----------------> Cambiar URL POST
             $.post("/wall/new_post", {
-                postPicCat: postPicCat,
-                newCat: newCat
+                nick: newCat
             });
         });
 
         //End Document.ready()
     });
     </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous">
+    </script>
+
+    <script>
+        window.jQuery || document.write('<script src="../node_modules/jquery/jquery.min.js"><\/script>');
+    </script>
+
+    <script src="sube-fotos.js"></script>
 </body>
 
 </html>

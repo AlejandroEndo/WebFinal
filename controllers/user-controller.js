@@ -14,3 +14,35 @@ exports.registro = function (data, callback) {
         callback(null, rows);
     });
 };
+
+exports.login = function (nick, pass, callback) {
+    db.getConection().query('SELECT * FROM usuarios where nick = ?', nick, function (err, rows) {
+        if (!err) {
+            //console.log(rows);
+            if(rows[0] != null) {
+                if (rows[0].pass == pass) {
+                    //console.log("Datos correctos");
+                    loged = true;
+                    callback(false, rows);
+                } else {
+                    //console.log(pass);
+                    callback(true);
+                }
+            } else {
+                //console.log("Usuario incorrecto");
+                callback(true);
+            }
+        } else {
+            console.log(err);
+        }
+    });
+};
+
+exports.getAll = function (callback) {
+    db.getConection().query('SELECT * FROM usuarios', function (err, rows) {
+        if(err){
+            return callback(true);
+        }
+        return callback(false, rows);
+    });
+};

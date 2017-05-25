@@ -34,7 +34,7 @@ function createPhoto() {
 };
 
 jQuery(document).ready(function(){
-    var uploadForm = jQuery('#upload-post');
+    var uploadForm = jQuery('#upload-historia');
 
     uploadForm.submit(function(event){
         event.preventDefault();
@@ -44,7 +44,7 @@ jQuery(document).ready(function(){
          * que llegue la respuesta.
          */
 
-        createPost().done(function(data){
+        createHistoria().done(function(data){
             if(data!=null){
                 // window.location.replace('/home.html');
             }
@@ -52,11 +52,42 @@ jQuery(document).ready(function(){
     });
 });
 
-function createPost() {
-    var formData = new FormData(jQuery('#upload-post')[0]);
+function createHistoria() {
+    var formData = new FormData(jQuery('#upload-historia')[0]);
     console.log(formData);
     return jQuery.ajax({
-        url: "/user/newPost",
+        url: "/wall/newStory",
+        type: "post",
+        contentType: false,
+        processData: false,
+        data: formData
+    });
+};
+
+jQuery(document).ready(function(){
+    var uploadForm = jQuery('#upload-comentario');
+
+    uploadForm.submit(function(event){
+        event.preventDefault();
+
+        /*
+         * Realizar el llamado asyncrono y controllar al momento
+         * que llegue la respuesta.
+         */
+
+        createComentario().done(function(data){
+            if(data!=null){
+                // window.location.replace('/home.html');
+            }
+        });
+    });
+});
+
+function createComentario() {
+    var formData = new FormData(jQuery('#upload-comentario')[0]);
+    console.log(formData);
+    return jQuery.ajax({
+        url: "/wall/newComentario",
         type: "post",
         contentType: false,
         processData: false,

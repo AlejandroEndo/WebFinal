@@ -32,12 +32,12 @@
                         <h2>Login</h2>
                         <!-- Form Inputs -->
                         <p>User</p>
-                        <input type="text" name="user" id="nick">
+                        <input type="text" name="user" id="nick" ng-model="nick">
                         <p>Password</p>
-                        <input type="password" name="password" id="password">
+                        <input type="password" name="password" id="password" ng-model="pass">
 
                         <!-- Form Button -->
-                        <a href="javascript:;" class="button" id="login-button">Login</a>
+                        <input class="button" ng-click="login()" value="Login">
                         <p>or</p>
                         <a href="register.html">Create Account</a></div>
                 </div>
@@ -49,35 +49,6 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
-    </script>
-
-    <script>
-    //SCRIPT PARA LA COMUNICACION CON EL SERVIDOR
-
-    $(document).ready(function() {
-
-        /*
-
-        +++++++++++++++ ENVIAR REGISTRO +++++++++++++++++++++++++++++++
-            Este envia la imagen y los Datos al servidor para crear el Usuario 
-            Reemplazar la direccion que esta en el $.post("estaaaaaaaa!!!") por la que reciba los datos
-            en el servidor, las variables son postPic y postContent
-        */
-
-        $("#login-button").click(function() {
-            console.log('Sending Register Data');
-            nick = $("#nick").val();
-            password = $("#password").val();
-            $.post("https://noseque", {
-                nick: nick,
-                password: password
-            });
-
-            console.log('Post Content: ' + nick);
-        });
-
-        //End Document.ready()
-    });
     </script>
 </body>
 
